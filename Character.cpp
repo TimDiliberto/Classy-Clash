@@ -2,17 +2,13 @@
 #include "raymath.h"
 #include "Character.h"
 
-Character::Character()
+Character::Character(int winWidth, int winHeight)
 {
     width = idle.width/maxFrames;
     height = idle.height;
-}
-
-void Character::setScreenPos(int winWidth, int winHeight)
-{
     screenPos = {
-        winWidth/2.f - 4.f * (0.5f * width),
-        winHeight/2.f - 4.f * (0.5f * height)
+        static_cast<float>(winWidth)/2.f - scale * (0.5f * width),
+        static_cast<float>(winHeight)/2.f - scale * (0.5f * height)
     };
 }
 
@@ -44,7 +40,7 @@ void Character::tick(float deltaTime)
 
     // Draw character
     Rectangle source{ frame * width, 0.f, rightLeft * width, height};
-    Rectangle dest{ screenPos.x, screenPos.y, 4.f * width, 4.f * height};
+    Rectangle dest{ screenPos.x, screenPos.y, scale * width, scale * height};
     DrawTexturePro(
         direction.x || direction.y != 0.f ? run : idle,
         source,

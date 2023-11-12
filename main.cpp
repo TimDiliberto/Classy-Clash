@@ -18,8 +18,7 @@ int main()
     const  float mapScale = 2.f;
 
     // Initialize character
-    Character knight;
-    knight.setScreenPos(winDims[0], winDims[1]);
+    Character knight(winDims[0], winDims[1]);
 
     // Set ideal FPS and begin game loop
     SetTargetFPS(60);
