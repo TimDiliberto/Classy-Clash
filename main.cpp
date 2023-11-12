@@ -15,6 +15,7 @@ int main()
     Texture2D map =
         LoadTexture("nature_tileset/(32x32) ClassyClash_worldMap.png");
     Vector2 mapPos{0.f, 0.f};
+    const  float mapScale = 2.f;
 
     // Initialize character
     Character knight;
@@ -30,10 +31,16 @@ int main()
         mapPos = Vector2Scale(knight.getWorldPos(), -1.f);
 
         // Draw Textures
-        DrawTextureEx(map, mapPos, 0.f, 2.f, WHITE);
+        DrawTextureEx(map, mapPos, 0.f, mapScale, WHITE);
 
         // Update character data
         knight.tick(GetFrameTime());
+        // Check map bounds
+        if (knight.getWorldPos().x < 0.f ||
+            knight.getWorldPos().y < 0.f ||
+            knight.getWorldPos().x + winDims[0] > map.width * mapScale ||
+            knight.getWorldPos().y + winDims[1] > map.height * mapScale)
+        { knight.undoMovement(); }
 
         // Deconstruct window
         EndDrawing();

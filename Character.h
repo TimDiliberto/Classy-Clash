@@ -5,6 +5,7 @@ class Character
     public:
         Character();
         Vector2 getWorldPos() { return worldPos; }
+        void undoMovement() { worldPos = prevWorldPos; }
         void setScreenPos(int winWidth, int winHeight);
         void tick(float deltaTime);
     private:
@@ -12,6 +13,7 @@ class Character
         Texture2D run{LoadTexture("characters/knight_run_spritesheet.png")};
         Vector2 screenPos{};
         Vector2 worldPos{};
+        Vector2 prevWorldPos{};
         float rightLeft{1.f}; // +1 facing right, -1 facing left
         float runningTime{};
         float updateTime{1.f/16.f};

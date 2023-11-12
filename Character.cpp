@@ -18,6 +18,8 @@ void Character::setScreenPos(int winWidth, int winHeight)
 
 void Character::tick(float deltaTime)
 {
+    // Collect previous world position
+    prevWorldPos = worldPos;
     // Check for movement
     Vector2 direction{};
     if (IsKeyDown(KEY_A)) direction.x -= 1.0;
