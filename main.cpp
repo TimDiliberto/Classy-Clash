@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Character.h"
+#include "Prop.h"
 
 int main()
 {
@@ -20,6 +21,9 @@ int main()
     // Initialize character
     Character knight(winDims[0], winDims[1]);
 
+    // Initialize props
+    Prop rock{ Vector2{0.f, 0.f}, LoadTexture("nature_tileset/Rock.png") };
+
     // Set ideal FPS and begin game loop
     SetTargetFPS(60);
     while (!WindowShouldClose()) {
@@ -31,6 +35,8 @@ int main()
 
         // Draw Textures
         DrawTextureEx(map, mapPos, 0.f, mapScale, WHITE);
+
+        rock.Render(knight.getWorldPos());
 
         // Update character data
         knight.tick(GetFrameTime());
