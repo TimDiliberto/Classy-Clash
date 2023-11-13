@@ -24,11 +24,24 @@ int main()
     Character knight(winDims[0], winDims[1]);
 
     Enemy goblin(
-        Vector2{},
+        Vector2{800.f, 300.f},
         LoadTexture("characters/goblin_idle_spritesheet.png"),
         LoadTexture("characters/goblin_run_spritesheet.png")
     );
-    goblin.setTarget(&knight);
+
+    Enemy slime(
+        Vector2{500.f, 700.f},
+        LoadTexture("characters/slime_idle_spritesheet.png"),
+        LoadTexture("characters/slime_run_spritesheet.png")
+    );
+
+    Enemy* enemies[]{
+        &goblin,
+        &slime
+    };
+    for (auto enemy : enemies) {
+        enemy->setTarget(&knight);
+    }
 
     Prop props[2]{
         Prop{Vector2{150.f, 400.f}, LoadTexture("nature_tileset/Rock.png")},
@@ -82,13 +95,19 @@ int main()
             if (collision) { knight.undoMovement(); }
         }
 
-        goblin.tick(GetFrameTime());
+        for (auto enemy : enemies)
+        {
+            enemy->tick(GetFrameTime());
+        }
 
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
-            if (CheckCollisionRecs(
-                goblin.getCollisionRec(),
-                knight.getWeaponCollisionRec())) { goblin.setAlive(false); }
+            for (auto enemy : enemies)
+            {
+                if (CheckCollisionRecs(
+                    enemy->getCollisionRec(),
+                    knight.getWeaponCollisionRec())) { enemy->setAlive(false); }
+            }
         }
 
         // Deconstruct window

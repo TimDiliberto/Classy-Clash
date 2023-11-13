@@ -72,14 +72,6 @@ void Character::tick(float deltaTime)
         weapon.height * scale
     };
     DrawTexturePro(weapon, source, dest, origin, rotation, WHITE);
-
-    DrawRectangleLines(
-        weaponCollisionRec.x,
-        weaponCollisionRec.y,
-        weaponCollisionRec.width,
-        weaponCollisionRec.height,
-        RED
-    );
 }
 
 void Character::takeDamage(float damage)
