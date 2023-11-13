@@ -10,11 +10,11 @@ class BaseCharacter
         Vector2 getWorldPos() { return worldPos; }
         void undoMovement() { worldPos = prevWorldPos; }
         Rectangle getCollisionRec();
+        virtual Vector2 getScreenPos() = 0;
     protected:
         Texture2D texture{LoadTexture("characters/goblin_idle_spritesheet.png")};
         Texture2D idle_tex{LoadTexture("characters/knight_idle_spritesheet.png")};
         Texture2D run_tex{LoadTexture("characters/knight_run_spritesheet.png")};
-        Vector2 screenPos{};
         Vector2 worldPos{};
         Vector2 prevWorldPos{};
         float rightLeft{1.f}; // +1 facing right, -1 facing left
@@ -26,6 +26,7 @@ class BaseCharacter
         float width{};
         float height{};
         float scale{4.f};
+        Vector2 velocity{};
 };
 
 #endif

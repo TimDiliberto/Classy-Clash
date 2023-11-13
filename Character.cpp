@@ -3,31 +3,29 @@
 #include "raylib.h"
 #include "raymath.h"
 
-Character::Character(int winWidth, int winHeight)
+Character::Character(int winWidth, int winHeight) :
+    windowWidth(winWidth),
+    windowHeight(winHeight)
 {
     width = idle_tex.width/maxFrames;
     height = idle_tex.height;
-    screenPos = {
-        static_cast<float>(winWidth)/2.f - scale * (0.5f * width),
-        static_cast<float>(winHeight)/2.f - scale * (0.5f * height)
+}
+
+Vector2 Character::getScreenPos()
+{
+    return Vector2{
+        static_cast<float>(windowWidth)/2.f - scale * (0.5f * width),
+        static_cast<float>(windowHeight)/2.f - scale * (0.5f * height)
     };
 }
 
 void Character::tick(float deltaTime)
 {
-    BaseCharacter::tick(deltaTime);
     // Check for movement
-    Vector2 direction{};
-    if (IsKeyDown(KEY_A)) direction.x -= 1.0;
-    if (IsKeyDown(KEY_D)) direction.x += 1.0;
-    if (IsKeyDown(KEY_W)) direction.y -= 1.0;
-    if (IsKeyDown(KEY_S)) direction.y += 1.0;
-    if (Vector2Length(direction) != 0.0) {
-        Vector2 normal {Vector2Normalize(direction)};
-        worldPos = Vector2Add(worldPos, Vector2Scale(normal , speed));
-        //direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
-        if (direction.x < 0.f) rightLeft = -1.f;
-        if (direction.x > 0.f) rightLeft = 1.f;
-    }
-    texture = direction.x || direction.y != 0.f ? run_tex : idle_tex;
+    if (IsKeyDown(KEY_A)) velocity.x -= 1.0;
+    if (IsKeyDown(KEY_D)) velocity.x += 1.0;
+    if (IsKeyDown(KEY_W)) velocity.y -= 1.0;
+    if (IsKeyDown(KEY_S)) velocity.y += 1.0;
+    
+    BaseCharacter::tick(deltaTime);
 };
