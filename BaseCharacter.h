@@ -11,6 +11,8 @@ class BaseCharacter
         void undoMovement() { worldPos = prevWorldPos; }
         Rectangle getCollisionRec();
         virtual Vector2 getScreenPos() = 0;
+        bool getAlive() { return alive; }
+        void setAlive(bool isAlive) { alive = isAlive; }
     protected:
         Texture2D texture{LoadTexture("characters/goblin_idle_spritesheet.png")};
         Texture2D idle_tex{LoadTexture("characters/knight_idle_spritesheet.png")};
@@ -27,6 +29,8 @@ class BaseCharacter
         float height{};
         float scale{4.f};
         Vector2 velocity{};
+    private:
+        bool alive{true};
 };
 
 #endif

@@ -21,6 +21,8 @@ Vector2 Character::getScreenPos()
 
 void Character::tick(float deltaTime)
 {
+    if (!getAlive()) return;
+
     // Check for movement
     if (IsKeyDown(KEY_A)) velocity.x -= 1.0;
     if (IsKeyDown(KEY_D)) velocity.x += 1.0;
@@ -36,7 +38,7 @@ void Character::tick(float deltaTime)
     {
         origin = {0.f, weapon.height * scale};
         offset = {38.f, 55.5f};
-        rotation = 35.f;
+        rotation = IsMouseButtonDown(MOUSE_BUTTON_LEFT) ? 35.f : 0.f;
         weaponCollisionRec = {
             getScreenPos().x + offset.x,
             getScreenPos().y + offset.y - weapon.height * scale,
@@ -48,7 +50,7 @@ void Character::tick(float deltaTime)
     {
         origin = {weapon.width * scale, weapon.height * scale};
         offset = {25.f, 55.f};
-        rotation = -35.f;
+        rotation = IsMouseButtonDown(MOUSE_BUTTON_LEFT) ? -35.f : 0.f;
         weaponCollisionRec = {
             getScreenPos().x + offset.x - weapon.width * scale,
             getScreenPos().y + offset.y - weapon.height * scale,
