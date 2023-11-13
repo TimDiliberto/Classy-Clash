@@ -5,8 +5,8 @@
 
 Character::Character(int winWidth, int winHeight)
 {
-    width = idle.width/maxFrames;
-    height = idle.height;
+    width = idle_tex.width/maxFrames;
+    height = idle_tex.height;
     screenPos = {
         static_cast<float>(winWidth)/2.f - scale * (0.5f * width),
         static_cast<float>(winHeight)/2.f - scale * (0.5f * height)
@@ -43,7 +43,7 @@ void Character::tick(float deltaTime)
     Rectangle source{ frame * width, 0.f, rightLeft * width, height};
     Rectangle dest{ screenPos.x, screenPos.y, scale * width, scale * height};
     DrawTexturePro(
-        direction.x || direction.y != 0.f ? run : idle,
+        direction.x || direction.y != 0.f ? run_tex : idle_tex,
         source,
         dest,
         Vector2{},

@@ -3,8 +3,8 @@
 Enemy::Enemy(Vector2 pos, Texture2D idle, Texture2D run)
 {
         worldPos = pos;
-        idle = idle;
-        run = run;
+        idle_tex = idle;
+        run_tex = run;
     width = idle.width/maxFrames;
     height = idle.height;
 }
@@ -25,7 +25,7 @@ void Enemy::tick(float deltaTime)
     Rectangle source{ frame * width, 0.f, rightLeft * width, height};
     Rectangle dest{ screenPos.x, screenPos.y, scale * width, scale * height};
     DrawTexturePro(
-        idle,
+        idle_tex,
         source,
         dest,
         Vector2{},
