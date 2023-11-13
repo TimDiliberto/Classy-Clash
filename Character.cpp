@@ -15,8 +15,7 @@ Character::Character(int winWidth, int winHeight)
 
 void Character::tick(float deltaTime)
 {
-    // Collect previous world position
-    prevWorldPos = worldPos;
+    BaseCharacter::tick(deltaTime);
     // Check for movement
     Vector2 direction{};
     if (IsKeyDown(KEY_A)) direction.x -= 1.0;
@@ -30,23 +29,5 @@ void Character::tick(float deltaTime)
         if (direction.x < 0.f) rightLeft = -1.f;
         if (direction.x > 0.f) rightLeft = 1.f;
     }
-
-    // Update animation
-    runningTime += deltaTime;
-    if (runningTime >= updateTime) {
-        runningTime = 0.f;
-        frame++;
-        if (frame >= maxFrames) frame = 0;
-    }
-
-    // Draw character
-    Rectangle source{ frame * width, 0.f, rightLeft * width, height};
-    Rectangle dest{ screenPos.x, screenPos.y, scale * width, scale * height};
-    DrawTexturePro(
-        direction.x || direction.y != 0.f ? run_tex : idle_tex,
-        source,
-        dest,
-        Vector2{},
-        0.f, WHITE
-    );
+    texture = direction.x || direction.y != 0.f ? run_tex : idle_tex;
 };

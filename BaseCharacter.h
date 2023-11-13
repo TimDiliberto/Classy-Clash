@@ -6,10 +6,12 @@ class BaseCharacter
 {
     public:
         BaseCharacter();
+        virtual void tick(float deltaTime);
         Vector2 getWorldPos() { return worldPos; }
         void undoMovement() { worldPos = prevWorldPos; }
         Rectangle getCollisionRec();
     protected:
+        Texture2D texture{LoadTexture("characters/goblin_idle_spritesheet.png")};
         Texture2D idle_tex{LoadTexture("characters/knight_idle_spritesheet.png")};
         Texture2D run_tex{LoadTexture("characters/knight_run_spritesheet.png")};
         Vector2 screenPos{};
