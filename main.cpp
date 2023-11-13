@@ -21,8 +21,10 @@ int main()
     // Initialize character
     Character knight(winDims[0], winDims[1]);
 
-    // Initialize props
-    Prop rock{ Vector2{0.f, 0.f}, LoadTexture("nature_tileset/Rock.png") };
+    Prop props[2]{
+        Prop{Vector2{150.f, 400.f}, LoadTexture("nature_tileset/Rock.png")},
+        Prop{Vector2{600.f, 300.f}, LoadTexture("nature_tileset/Log.png")}
+    };
 
     // Set ideal FPS and begin game loop
     SetTargetFPS(60);
@@ -36,7 +38,7 @@ int main()
         // Draw Textures
         DrawTextureEx(map, mapPos, 0.f, mapScale, WHITE);
 
-        rock.Render(knight.getWorldPos());
+        for (auto prop : props) { prop.Render(knight.getWorldPos()); }
 
         // Update character data
         knight.tick(GetFrameTime());
@@ -46,6 +48,17 @@ int main()
             knight.getWorldPos().x + winDims[0] > map.width * mapScale ||
             knight.getWorldPos().y + winDims[1] > map.height * mapScale)
         { knight.undoMovement(); }
+
+        // Check for player collision with props
+        // Figure out how to make player glide alongside prop and not get stuck
+        for (auto prop : props) {
+            bool collision{
+                CheckCollisionRecs(
+                    knight.getCollisionRec(), 
+                    prop.getCollisionRec(knight.getWorldPos()))
+            };
+            if (collision) { knight.undoMovement(); }
+        }
 
         // Deconstruct window
         EndDrawing();

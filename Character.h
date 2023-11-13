@@ -7,6 +7,7 @@ class Character
         Vector2 getWorldPos() { return worldPos; }
         void undoMovement() { worldPos = prevWorldPos; }
         void tick(float deltaTime);
+        Rectangle getCollisionRec();
     private:
         Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};
         Texture2D run{LoadTexture("characters/knight_run_spritesheet.png")};
