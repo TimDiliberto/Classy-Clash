@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Character.h"
+#include "Enemy.h"
 #include "Prop.h"
 
 int main()
@@ -20,6 +21,12 @@ int main()
 
     // Initialize character
     Character knight(winDims[0], winDims[1]);
+
+    Enemy goblin(
+        Vector2{},
+        LoadTexture("characters/goblin_idle_spritesheet.png"),
+        LoadTexture("characters/goblin_run_spritesheet.png")
+    );
 
     Prop props[2]{
         Prop{Vector2{150.f, 400.f}, LoadTexture("nature_tileset/Rock.png")},
@@ -59,6 +66,8 @@ int main()
             };
             if (collision) { knight.undoMovement(); }
         }
+
+        goblin.tick(GetFrameTime());
 
         // Deconstruct window
         EndDrawing();

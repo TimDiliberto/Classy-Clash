@@ -49,14 +49,4 @@ void Character::tick(float deltaTime)
         Vector2{},
         0.f, WHITE
     );
-}
-
-Rectangle Character::getCollisionRec()
-{
-    return Rectangle{
-        screenPos.x,
-        screenPos.y,
-        width * scale,
-        height * scale
-    };
 };
